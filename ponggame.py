@@ -137,10 +137,10 @@ class Ball(Drawable):
         self.rect.x += self.x_speed
         self.rect.y += self.y_speed
 
-        if self.rect.x < 0 or self.rect.x > board.surface.get_width():
+        if self.rect.x < 0 or self.rect.x > (board.surface.get_width() - self.width):
             self.bounce_x()
 
-        if self.rect.y < 0 or self.rect.y > board.surface.get_height():
+        if self.rect.y < self.height or self.rect.y > (board.surface.get_height() - self.height):
             self.bounce_y()
 
         for racket in args:
