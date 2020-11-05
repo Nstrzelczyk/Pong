@@ -77,10 +77,15 @@ class PongGame(object):
                 pygame.quit()
                 return True
 
-            if event.type == pygame.locals.MOUSEMOTION:
-                # the mouse controls the movement of the first player
-                x, y = event.pos
+            # capture cursor key presses
+            if event.type == pygame.KEYDOWN:
+                x = self.player1.x
+                if event.key == pygame.K_LEFT:
+                    self.player1.x -= 5
+                elif event.key == pygame.K_RIGHT:
+                    self.player1.x += 5
                 self.player1.move(x)
+
 
 
 class Drawable(object):
@@ -157,6 +162,7 @@ class Racket(Drawable):
         super(Racket, self).__init__(width, height, x, y, color)
         self.max_speed = max_speed
         self.surface.fill(color)
+        self.x = x
 
     def move(self, x):
         """
@@ -164,7 +170,7 @@ class Racket(Drawable):
         """
         delta = x - self.rect.x
         if abs(delta) > self.max_speed:
-            delta = self.max_speed if delta > 0 else -self.max_speed
+            delta = self.max_speed if delta > 0 else - self.max_speed
         self.rect.x += delta
 
 
@@ -179,6 +185,11 @@ class Ai(object):
     def move(self):
         x = self.ball.rect.centerx
         self.racket.move(x)
+
+
+# TODO: Dostosować rakietke nie zawsze trafiała piłeczkę,
+#  gdy self.ball.rect.centerx > od self.racet.centerx move + jak mniejsze move -
+# TODO: sprawdzic czy rakietka ma centerx
 
 
 class Judge(object):
