@@ -219,16 +219,16 @@ class Judge(object):
         """
         Allocates the points and brings the ball to its original position.
         """
-        if self.ball.rect.y < 0:
+        if self.ball.rect.y <= self.ball.height :
             self.score[0] += 1
             self.ball.reset()
-        elif self.ball.rect.y > board_height:
+        elif self.ball.rect.y >= board_height - self.ball.height:
             self.score[1] += 1
             self.ball.reset()
 
     def draw_text(self, surface,  text, x, y):
         """
-        Rysuje wskazany tekst we wskazanym miejscu
+        Draws the indicated text at the indicated location
         """
         text = self.font.render(text, True, (150, 150, 150))
         rect = text.get_rect()
