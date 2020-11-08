@@ -52,6 +52,7 @@ class PongGame(object):
         self.judge = Judge(self.board, self.ball, self.player2, self.ball)
 
     def run(self):
+        pygame.key.set_repeat(50, 25)
         """
         Main program loop.
         """
@@ -76,16 +77,22 @@ class PongGame(object):
             if event.type == pygame.locals.QUIT:
                 pygame.quit()
                 return True
-
+            pygame.key.get_pressed()
             # capture cursor key presses
             if event.type == pygame.KEYDOWN:
-                x = self.player1.x
+                poz_x = self.player1.x
+                poz_y = self.player2.x
                 if event.key == pygame.K_LEFT:
-                    self.player1.x -= 5
+                    self.player1.x -= 8
                 elif event.key == pygame.K_RIGHT:
-                    self.player1.x += 5
-                self.player1.move(x)
+                    self.player1.x += 8
+                self.player1.move(poz_x)
 
+                # if event.key == pygame.K_a:
+                #     self.player2.x -= 5
+                # elif event.key == pygame.K_d:
+                #     self.player2.x += 5
+                # self.player2.move(poz_y)
 
 
 class Drawable(object):
