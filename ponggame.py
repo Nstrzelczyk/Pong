@@ -81,18 +81,25 @@ class PongGame(object):
             # capture cursor key presses
             if event.type == pygame.KEYDOWN:
                 poz_x = self.player1.x
-                poz_y = self.player2.x
+                # poz_y = self.player2.x
                 if event.key == pygame.K_LEFT:
                     self.player1.x -= 8
                 elif event.key == pygame.K_RIGHT:
                     self.player1.x += 8
                 self.player1.move(poz_x)
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+                # TODO: if event.key == pygame.K_SPACE then start run game, in beginning we have just menu
 
-                # if event.key == pygame.K_a:
-                #     self.player2.x -= 5
-                # elif event.key == pygame.K_d:
-                #     self.player2.x += 5
-                # self.player2.move(poz_y)
+                """
+                Ability to choose between Ai and the Second player
+                if event.key == pygame.K_a:
+                    self.player2.x -= 5
+                elif event.key == pygame.K_d:
+                    self.player2.x += 5
+                self.player2.move(poz_y)
+                """
 
 
 class Drawable(object):
