@@ -69,7 +69,7 @@ class PongGame(object):
             self.ai.move()
             self.fps_clock.tick(30)
 
-    def handle_events(self):
+    def handle_events(self, board):
         """
         Handling system events.
         """
@@ -84,22 +84,25 @@ class PongGame(object):
                 # poz_y = self.player2.x
                 if event.key == pygame.K_LEFT:
                     self.player1.x -= 8
+                    if self.player1.x < 0:
+                        self.player1.x = 0
                 elif event.key == pygame.K_RIGHT:
                     self.player1.x += 8
+                    if self.player1.x > (800- self.player1.width):
+                        self.player1.x = (800 - self.player1.width)
+                        # TODO: Change 800 to variable
                 self.player1.move(poz_x)
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
                 # TODO: if event.key == pygame.K_SPACE then start run game, in beginning we have just menu
+                # TODO: Ability to choose between Ai and the Second player
+                # if event.key == pygame.K_a:
+                #     self.player2.x -= 5
+                # elif event.key == pygame.K_d:
+                #     self.player2.x += 5
+                # self.player2.move(poz_y)
 
-                """
-                Ability to choose between Ai and the Second player
-                if event.key == pygame.K_a:
-                    self.player2.x -= 5
-                elif event.key == pygame.K_d:
-                    self.player2.x += 5
-                self.player2.move(poz_y)
-                """
 
 
 class Drawable(object):
