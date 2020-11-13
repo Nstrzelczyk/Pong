@@ -69,7 +69,7 @@ class PongGame(object):
             self.ai.move()
             self.fps_clock.tick(30)
 
-    def handle_events(self, board):
+    def handle_events(self):
         """
         Handling system events.
         """
@@ -88,7 +88,7 @@ class PongGame(object):
                         self.player1.x = 0
                 elif event.key == pygame.K_RIGHT:
                     self.player1.x += 8
-                    if self.player1.x > (800- self.player1.width):
+                    if self.player1.x > (800 - self.player1.width):
                         self.player1.x = (800 - self.player1.width)
                         # TODO: Change 800 to variable
                 self.player1.move(poz_x)
@@ -201,9 +201,9 @@ class Ai(object):
 
     def move(self):
         x = self.ball.rect.centerx
+        if x >= 800 - self.racket.width:
+            x = 800 - self.racket.width
         self.racket.move(x)
-
-
 # TODO: Dostosować rakietke nie zawsze trafiała piłeczkę,
 #  gdy self.ball.rect.centerx > od self.racet.centerx move + jak mniejsze move -
 # TODO: sprawdzic czy rakietka ma centerx
