@@ -48,7 +48,8 @@ class PongGame(object):
         self.ball = Ball(20, 20, width / 2, height / 2)
         self.player1 = Racket(width=80, height=20, x=width / 2 - 40, y=height - 40)
         self.player2 = Racket(width=80, height=20, x=width / 2 - 40, y=20, color=(0, 0, 0))
-        self.ai = Ai(self.player2, self.ball)
+        self.player3 = Racket(width=80, height=20, x=width / 2 - 40, y=20, color=(0, 0, 0))
+        self.ai = Ai(self.player3, self.ball)
         self.judge = Judge(self.board, self.ball, self.player2, self.ball)
 
     def run(self):
@@ -58,12 +59,12 @@ class PongGame(object):
         """
         while not self.handle_events():
             # loop until receiving a signal to output.
-            self.ball.move(self.board, self.player1)
-            self.ball.move(self.board, self.player1, self.player2)
+            self.ball.move(self.board, self.player1, self.player2, self.player3)
             self.board.draw(
                 self.ball,
                 self.player1,
-                self.player2,
+                # self.player2,
+                self.player3,
                 self.judge,
             )
             self.ai.move()
@@ -90,6 +91,14 @@ class PongGame(object):
                     self.player1.x += 8
                     if self.player1.x > (800 - self.player1.width):
                         self.player1.x = (800 - self.player1.width)
+                if event.key == pygame.K_a:
+                    self.player2.x -= 8
+                    if self.player2.x < 0:
+                        self.player2.x = 0
+                elif event.key == pygame.K_d:
+                    self.player1.x += 8
+                    if self.player2.x > (800 - self.player1.width):
+                        self.player2.x = (800 - self.player1.width)
                         # TODO: Change 800 to variable
                 self.player1.move(poz_x)
                 if event.key == pygame.K_ESCAPE:
@@ -97,13 +106,7 @@ class PongGame(object):
                     quit()
                 # TODO: if event.key == pygame.K_SPACE then start run game, in beginning we have just menu
                 # TODO: Ability to choose between Ai and the Second player
-                # if event.key == pygame.K_a:
-                #     self.player2.x -= 5
-                # elif event.key == pygame.K_d:
-                #     self.player2.x += 5
-                # self.player2.move(poz_y)
-
-
+                
 
 class Drawable(object):
     """
@@ -204,9 +207,6 @@ class Ai(object):
         if x >= 800 - self.racket.width:
             x = 800 - self.racket.width
         self.racket.move(x)
-# TODO: Dostosować rakietke nie zawsze trafiała piłeczkę,
-#  gdy self.ball.rect.centerx > od self.racet.centerx move + jak mniejsze move -
-# TODO: sprawdzic czy rakietka ma centerx
 
 
 class Judge(object):
